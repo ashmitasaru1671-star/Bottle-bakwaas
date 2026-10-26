@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bottle Bakwaas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFE6F0;--ink:#3B0A45;--card:#fff;--muted:#7a4a86;--pink:#E91E78;--teal:#00A99D;--sun:#FFB000;--line:#f1b3cf;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2A0733;--ink:#FFE8F2;--card:#431052;--muted:#d6a4df;--line:#6b2a7e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#2A0733;--ink:#FFE8F2;--card:#431052;--muted:#d6a4df;--line:#6b2a7e;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo 2",system-ui,sans-serif;font-weight:500;font-size:1.05rem;line-height:1.35}
+main{max-width:520px;margin:0 auto;padding:22px 18px 28px}
+h1{font-family:"Bowlby One",system-ui,sans-serif;font-weight:400;font-size:clamp(2.6rem,13vw,4.2rem);line-height:.98;margin:8px 0 10px;color:var(--pink);text-shadow:3px 3px 0 var(--sun)}
+.sub{color:var(--muted);margin:0 0 14px}
+.row{display:flex;gap:10px}
+input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:16px;padding:10px 14px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:16px;padding:12px 16px;cursor:pointer;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sun{background:var(--sun);color:#3B0A45}
+.btn.go{background:var(--pink);color:#fff;width:100%;font-size:1.3rem;padding:16px;margin-top:12px}
+.btn.truth{background:var(--teal);color:#05302c}.btn.dare{background:var(--pink)}
+.btn.soft{background:var(--card);color:var(--ink);border:3px solid var(--line)}
+.wide{width:100%;margin-top:10px}
+.btn:focus-visible,input:focus-visible,.link:focus-visible,.chip button:focus-visible,.fc:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+#chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:3px solid var(--c);border-radius:999px;padding:3px 6px 3px 4px;font-weight:800}
+.av{width:28px;height:28px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-style:normal;font-size:1rem}
+.chip button{border:0;background:none;color:var(--muted);font:inherit;font-size:1.2rem;line-height:1;cursor:pointer;padding:2px 6px}
+.lv{display:flex;gap:8px}.lv button{flex:1;font:inherit;font-weight:800;padding:10px;border-radius:14px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.lv button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+details{margin:6px 0}summary{cursor:pointer;font-weight:800}
+.table{position:relative;width:100%;max-width:340px;aspect-ratio:1;margin:6px auto 8px;border-radius:50%;border:5px solid var(--ink);background:var(--card);box-shadow:0 6px 0 rgba(0,0,0,.2)}
+#hl{position:absolute;inset:0;border-radius:50%;transition:background .3s}
+.seat{position:absolute;transform:translate(-50%,-50%);max-width:36%;display:flex;align-items:center;gap:4px;padding:2px 9px 2px 2px;border-radius:999px;background:var(--card);color:var(--ink);border:3px solid var(--c);font-weight:800;font-size:.8rem;transition:transform .3s}
+.seat span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seat .av{width:24px;height:24px;flex:none}
+.seat.win{transform:translate(-50%,-50%) scale(1.3);z-index:2;background:var(--sun);color:#3B0A45}
+.bottle{position:absolute;left:50%;top:26%;width:28px;height:48%;margin-left:-14px;background:linear-gradient(var(--pink),var(--pink)) center top/12px 10px no-repeat;border-radius:4px 4px 0 0;transition:transform 4s cubic-bezier(.12,.6,.1,1)}
+.bottle::before{content:"";position:absolute;left:8px;right:8px;top:10px;bottom:45%;background:#fff;border:3px solid #3B0A45;border-bottom:0}
+.bottle::after{content:"";position:absolute;left:0;right:0;bottom:0;height:57%;border-radius:12px 12px 10px 10px;background:linear-gradient(90deg,#fff 60%,#e4e4ee);border:3px solid #3B0A45}
+.ask{text-align:center;font-weight:800;font-size:1.25rem;margin:0 0 6px}
+.fc{perspective:1000px;cursor:pointer;margin:6px 0 10px}
+.fi{position:relative;min-height:300px;transform-style:preserve-3d;transition:transform .6s}
+.fc.open .fi{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;border:8px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;background:linear-gradient(var(--card),var(--card)) padding-box,repeating-linear-gradient(45deg,var(--pink) 0 10px,var(--sun) 10px 20px,var(--teal) 20px 30px) border-box}
+.front{background:linear-gradient(var(--pink),var(--pink)) padding-box,repeating-linear-gradient(45deg,var(--sun) 0 10px,var(--teal) 10px 20px,var(--card) 20px 30px) border-box;color:#fff}
+.front span{font-family:"Bowlby One",sans-serif;font-size:6rem;line-height:1}
+.back{transform:rotateY(180deg)}
+.back b{color:var(--pink);font-size:1.15rem}.back i{font-style:normal;font-size:3rem;line-height:1.2}
+.back p{font-size:1.35rem;line-height:1.25;font-weight:800;margin:4px 0 0}
+.shake{animation:sh .4s}@keyframes sh{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.dock{position:sticky;bottom:0;padding:10px 0 4px;background:linear-gradient(transparent,var(--bg) 25%)}
+.dock .btn.go{margin-top:0}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+#score{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 0}.sc{font-size:.85rem;font-weight:800;background:var(--card);border:3px solid var(--c);border-radius:999px;padding:1px 10px}
+.link{display:block;margin:14px auto 0;background:none;border:0;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer}
+#board{padding-left:1.3em;font-size:1.3rem;font-weight:800}#awards p{margin:8px 0;font-weight:800;background:var(--sun);color:#3B0A45;padding:10px 14px;border-radius:16px}
+#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9}
+</style>
+</head>
+<body>
+<main>
+<section id="setup">
+  <h1>Bottle Bakwaas</h1>
+  <p class="sub">Add everyone, put the phone in the middle, spin the bottle. No skipping!</p>
+  <div class="row"><input id="name" placeholder="Player name" maxlength="20" autocomplete="off"><button class="btn sun" id="add">Add</button></div>
+  <div id="chips"></div>
+  <p class="sub" id="hint"></p>
+  <div class="lv" id="lv"><button data-l="1">Easy</button><button data-l="2" class="on">Silly</button><button data-l="3">Chaos</button></div>
+  <p class="sub" style="margin-top:6px">Easy is family-friendly. Chaos adds face painting and costumes.</p>
+  <div class="row"><input id="own" placeholder="Add your own dare (optional)" maxlength="120" autocomplete="off"><button class="btn sun" id="addOwn">Add</button></div>
+  <p class="sub" id="ownN"></p>
+  <details><summary>How to play</summary><p class="sub">Spin the bottle. Whoever it points at flips a card and does the dare. The group scores it. Refuse and you get a forfeit!</p></details>
+  <button class="btn go" id="start" disabled>Start game</button>
+  <button class="btn soft wide" id="quick">Quick start with 4 players</button>
+  <button class="btn soft wide" id="share">Share on WhatsApp</button>
+</section>
+<section id="play" hidden>
+  <div class="table" id="table"><div id="hl"></div><div class="bottle" id="bottle"></div></div>
+  <p class="ask" id="res"></p>
+  <div class="fc" id="card" hidden tabindex="0"><div class="fi"><div class="face front"><span>?</span><b>Tap to flip</b></div><div class="face back"><b id="kind"></b><i id="ico"></i><p id="prompt"></p></div></div></div>
+  <div id="score"></div>
+  <div class="dock">
+    <div id="spinBox"><button class="btn go" id="spin">Spin the bottle</button></div>
+    <div id="choose" hidden><button class="btn go dare" data-m="d">Reveal my dare</button></div>
+    <button class="btn soft wide" id="tm" hidden></button>
+    <div class="three" id="rates" hidden><button class="btn truth" data-s="2">Nailed it +2</button><button class="btn soft" data-s="1">Okay +1</button><button class="btn dare" data-s="-1">Refused</button></div>
+    <button class="btn go" id="next" hidden>Next spin</button>
+  </div>
+  <button class="link" id="snd">Sound: on</button>
+  <button class="link" id="fin">End game and see awards</button>
+  <button class="link" id="back">Edit players</button>
+</section>
+<section id="end" hidden>
+  <h1>Final scores</h1><ol id="board"></ol><div id="awards"></div>
+  <button class="btn go" id="again">Play again</button>
+  <button class="btn soft wide" id="share2">Share on WhatsApp</button>
+</section>
+</main>
+<canvas id="cf"></canvas>
+<script>
+const DARES=["Bang a steel pot with a wooden spoon and perform a 20-second drum solo.", "Play a song by tapping on a table, a chair and a plastic bottle. Nothing breakable!", "Put on your mom’s or dad’s clothes over your own (ask first!) and strut like a model.", "Wear a scarf, dupatta or towel as a cape and give a speech as a superhero.", "Draw a big mustache on your face with eyeliner or a washable marker.", "Put on lipstick without looking in a mirror and wear it for the next 3 rounds.", "Draw a thick unibrow with kajal and keep it for 3 rounds.", "Draw dramatic kajal eyeliner wings and keep them for 3 rounds.", "Blacken one front tooth with a small piece of black paper or a black sticker, then flash your best smile.", "Wear a pot or bowl as a hat and give a royal speech.", "Put socks on your hands and wave like a queen or king.", "Wear your T-shirt backwards for the rest of the game.", "Make a hat from newspaper and wear it for the next 3 rounds.", "Balance a book on your head and walk across the room without dropping it.", "Crab-walk from the kitchen to the living room.", "Sing a song into a spoon or ladle like a rock star.", "Host a cooking show: narrate pouring a glass of water like a master chef for 30 seconds.", "Wipe a table while doing a robot dance.", "Stick a sticky note on your forehead with a word the group picks. Keep it on until the game ends.", "Stick 5 sticky notes on your face and keep them for 3 rounds.", "Do 10 chair sit-and-stands, shouting a different fruit each time.", "Strut from one room to another with a handbag or bucket like it’s fashion week.", "Tie a scarf around your head like a pirate and say only ‘arrr’ for the next 2 rounds.", "Conduct the group in singing any song, using two spoons as batons.", "Draw a face on your hand with a marker and make it talk for 30 seconds.", "Balance a spoon on your nose for 10 seconds.", "Let the group style your hair with clips and rubber bands. Keep it for 3 rounds.", "Wear sunglasses and a scarf and act like a mysterious celebrity for 30 seconds.", "Wear mismatched clothes from the family wardrobe (ask first!) for 3 rounds.", "Balance on one foot while hugging a pillow and name 10 vegetables.", "Cross the room by stepping only on cushions laid on the floor.", "Open the fridge and review what you see like a dramatic TV reporter. Don’t eat anything!", "Make a fake mustache from paper or black thread and wear it for 3 rounds.", "Draw a funny tattoo on your arm with a washable marker.", "Draw big cartoon glasses around your eyes with a washable marker.", "Dance like a chicken for 20 seconds.", "Find 5 red things in the house in 30 seconds. Walk fast, no running!", "Be a robot waiter: serve imaginary tea to everyone in a robot voice.", "Wear oven gloves and try to pick up 5 small things like coins, a pen and a spoon.", "Cover yourself with a bedsheet and haunt the room for 20 seconds with friendly ghost messages.", "Sell a pillow in a 30-second TV shopping ad.", "Narrate everything you do like a cartoon announcer until your next turn.", "Do 10 jumping jacks while holding a pillow over your head.", "Make a crown from kitchen foil and wear it for the next 3 rounds.", "Talk in a funny voice (squeaky or deep) for the next 2 rounds.", "Give the group a 30-second museum tour of the room, calling every object a priceless artifact.", "Walk from the kitchen door to the nearest chair in slow motion, with dramatic music sounds.", "Hold a funny pose chosen by the group as a statue for 20 seconds while they try to make you laugh.","Post your ugliest selfie on your story for 24 hours.", "Call a random follower or friend and tell them something silly but kind, like “You’re the MVP of my day!”", "Call a friend and say a silly, kind line the group picks for you. No insults!", "Post a story of your best bodybuilder pose with a dramatic caption.", "Change your profile picture to a goofy photo chosen by the group for 1 hour.", "Arm-wrestle the person on your right. The loser does 5 push-ups.", "Do as many push-ups as you can in 30 seconds while the group counts.", "Make a WWE-style entrance with your own theme music and a championship pose.", "Flex and give a 20-second speech on why you’re the strongest person alive.", "Win a staring contest against the person on your left. The loser does 5 jumping jacks.", "Play best-of-3 rock-paper-scissors with someone. The loser does 10 squats.", "Do a 30-second stand-up comedy set. The group scores your jokes.", "Commentate 30 seconds of someone drinking water like a cricket or football match.", "Invent a secret handshake with every player.", "Celebrate like you just won the World Cup final, in slow motion.", "Lift two heavy books like dumbbells for 15 reps and grunt dramatically.", "Send a friend a voice note saying only “Breaking news: I am a legend,” in a news-anchor voice.", "Let the group pick a funny, kind caption and post a selfie with it on your story.", "Sing a famous movie theme as loudly as you can.", "Do 20 sit-ups while reciting a tongue twister."];
+const TWISTS=["do it in slow motion.", "do it in a robot voice.", "do it in an opera voice.", "do it while standing on one foot.", "do it like a news anchor.", "do it with a pillow on your head.", "everyone rates it from 1 to 10 afterwards."];
+const FORF=["Do 10 jumping jacks, counting loudly in a funny voice.","Tell your funniest joke. If nobody laughs, tell another.","Give everyone a compliment in an over-the-top voice.","Wear a funny hat (anything on your head) for the next 3 rounds.","Do your best chicken dance for 15 seconds.","Accept a silly nickname from the group for the rest of the game.","Sing any chorus like an opera singer.","Do 5 squats, announcing each one like a sports commentator."];
+const CH=[3,5,6,7,8,9,12,13,19,20,27,29,33,34,35,40,44,49,50,51,52,53,66],EZ=[2,10,11,14,16,17,18,21,22,24,26,28,30,31,36,37,38,41,42,43,45,46,47,48,61,62,63,67];
+const lvl=i=>CH.includes(i+1)?3:EZ.includes(i+1)?1:2;
+
+const $=s=>document.querySelector(s);
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const EM=["🦁","🐯","🦊","🐼","🐸","🦄","🐵","🐙","🦖","🐧","🦉","🐰"],COL=["#FF4D8D","#FFC93C","#2EC4B6","#8E6CFF","#FF8A3D","#4DA3FF","#6BCB77","#E056FD","#FF6B6B","#26C6DA","#C7E03D","#B08968"];
+let players=[],cur=null,rot=0,deck=[],tmr=null,snd=true,AC=null,stats={},level=2,own=[],txt='',open=false;
+try{players=JSON.parse(localStorage.getItem('bb')||'[]').slice(0,30)}catch(e){}
+const av=(i,p)=>{const a=document.createElement('i');a.className='av';a.textContent=EM[i%12];return a};
+function beep(f,d){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.05;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function chime(){beep(660,.15);setTimeout(()=>beep(880,.3),160)}
+function buzz(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+function boom(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const P=[...Array(90)].map(()=>({x:c.width/2,y:c.height*.6,vx:(Math.random()-.5)*14,vy:-Math.random()*16-4,s:6+Math.random()*6,c:['#E91E78','#FFB000','#00A99D','#fff'][Math.random()*4|0],r:Math.random()*6}));let f=0;(function t(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.vy+=.5;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<90)requestAnimationFrame(t);else x.clearRect(0,0,c.width,c.height)})()}
+function timer(t){clearInterval(tmr);const b=$('#tm'),m=t.match(/(\d+)[- ]second/);b.hidden=!m;if(!m)return;let n=+m[1];b.textContent='Start '+n+'s timer';b.onclick=()=>{b.onclick=null;b.textContent=n+'s left';tmr=setInterval(()=>{n--;b.textContent=n>0?n+'s left':'Time’s up!';if(n<=0){clearInterval(tmr);chime()}},1000)}}
+function icon(t){const R=[[/call|voice note/i,'📞'],[/push-up|arm-wrestle|flex|dumbbell/i,'💪'],[/story|profile/i,'📱'],[/pot|drum|tapping/i,'🥁'],[/mustache/i,'🥸'],[/lipstick/i,'💄'],[/kajal|eyeliner|unibrow|glasses/i,'👁️'],[/tooth/i,'🦷'],[/hat|crown/i,'👑'],[/clothes|T-shirt|scarf|dupatta|towel|socks/i,'👚'],[/sing|song|conduct|opera/i,'🎤'],[/dance|chicken|crab|strut|robot|walk|moonwalk/i,'💃'],[/fridge|cook|kitchen|spoon|ladle|oven|water/i,'🍳'],[/sticky/i,'📝'],[/ghost|bedsheet/i,'👻'],[/selfie|photo/i,'📸'],[/jacks|squat|sit-and|balance|pose|statue/i,'🤸']];for(const[r,e]of R)if(r.test(t))return e;return'🎉'}
+function score(){const b=$('#score');b.textContent='';players.forEach((p,i)=>{const c=document.createElement('span');c.className='sc';c.style.setProperty('--c',COL[i%12]);c.textContent=EM[i%12]+' '+p+' '+stats[p].pts;b.appendChild(c)})}
+function seats(){
+  const T=$('#table');T.querySelectorAll('.seat').forEach(e=>e.remove());
+  const n=players.length,seg=360/n,st=players.map((p,i)=>'#fff '+i*seg+'deg '+(i*seg+1.6)+'deg,'+COL[i%12]+' '+(i*seg+1.6)+'deg '+(i+1)*seg+'deg');T.style.background='conic-gradient(from '+(-seg/2)+'deg,'+st.join(',')+')';$('#hl').style.background='none';
+  players.forEach((p,i)=>{const a=i*2*Math.PI/players.length,s=document.createElement('div'),n=document.createElement('span');s.className='seat';s.style.setProperty('--c',COL[i%12]);n.textContent=p;s.appendChild(av(i));s.appendChild(n);s.style.left=50+40*Math.sin(a)+'%';s.style.top=50-40*Math.cos(a)+'%';T.appendChild(s)});
+}
+function drawChips(){
+  const box=$('#chips');box.textContent='';
+  players.forEach((p,i)=>{const c=document.createElement('span');c.className='chip';c.style.setProperty('--c',COL[i%12]);c.appendChild(av(i));c.appendChild(document.createTextNode(p));
+    const x=document.createElement('button');x.textContent='×';x.setAttribute('aria-label','Remove '+p);x.onclick=()=>{players.splice(i,1);drawChips()};c.appendChild(x);box.appendChild(c)});
+  $('#start').disabled=players.length<2;
+  $('#hint').textContent=players.length<2?'Add at least 2 players. There’s no upper limit.':players.length+' players ready.';
+  try{localStorage.setItem('bb',JSON.stringify(players))}catch(e){}
+}
+function addPlayer(){const v=$('#name').value.trim();if(v&&!players.some(p=>p.toLowerCase()===v.toLowerCase()))players.push(v);$('#name').value='';drawChips();$('#name').focus()}
+function show(s){$('#spinBox').hidden=s!=='spin';$('#choose').hidden=s!=='choose';$('#card').hidden=s!=='card';$('#table').hidden=s==='card';$('#res').hidden=s==='card';if(s!=='card'){$('#rates').hidden=$('#next').hidden=$('#tm').hidden=true}}
+function nextTurn(){clearInterval(tmr);cur=null;open=false;$('#card').classList.remove('open','shake');$('#res').textContent='Spin it and let the bottle decide.';$('#spin').disabled=false;seats();score();show('spin')}
+function spin(){
+  $('#spin').disabled=true;$('#res').textContent='';
+  const n=players.length,r=Math.random()*n|0,seg=360/n,target=r*seg+(Math.random()-.5)*seg*.6;
+  rot+=360*(4+(Math.random()*3|0))+(((target-rot)%360)+360)%360;
+  $('#bottle').style.transform='rotate('+rot+'deg)';
+  for(let i=0;i<30;i++)setTimeout(()=>beep(300+i*12,.04),3900*(1-Math.pow(1-i/30,2)));
+  setTimeout(()=>{cur=players[r];document.querySelectorAll('.seat')[r].classList.add('win');$('#hl').style.background='conic-gradient(from '+(-seg/2)+'deg,transparent '+r*seg+'deg,rgba(255,255,255,.55) '+r*seg+'deg '+(r+1)*seg+'deg,transparent '+(r+1)*seg+'deg)';$('#res').textContent=cur+', it’s you!';show('choose');chime();buzz(80)},4100);
+}
+function showCard(){
+  if(!deck.length)deck=shuffle(DARES.filter((_,i)=>lvl(i)<=level).concat(own));
+  txt=deck.pop();if(Math.random()<.25)txt+=' Twist: '+TWISTS[Math.random()*TWISTS.length|0];
+  $('#kind').textContent='Dare for '+cur;$('#ico').textContent=icon(txt);$('#prompt').textContent=txt;
+  open=false;$('#card').classList.remove('open','shake');show('card');
+}
+function flip(){if(open||!cur)return;open=true;$('#card').classList.add('open');beep(520,.1);$('#rates').hidden=false;timer(txt)}
+function forfeit(){$('#kind').textContent='Forfeit for '+cur;$('#ico').textContent='😅';$('#prompt').textContent=FORF[Math.random()*FORF.length|0];$('#rates').hidden=true;$('#next').hidden=false;$('#tm').hidden=true;clearInterval(tmr)}
+function rate(v){const st=stats[cur];if(v<0){st.ref++;buzz([60,40,60]);$('#card').classList.add('shake');setTimeout(()=>$('#card').classList.remove('shake'),450);forfeit();return}st.pts+=v;if(v===2){st.nail++;boom();buzz(120)}setTimeout(nextTurn,v===2?1300:0)}
+function endGame(){
+  clearInterval(tmr);const r=players.slice().sort((a,b)=>stats[b].pts-stats[a].pts),L=$('#board'),A=$('#awards');L.textContent='';A.textContent='';
+  r.forEach(p=>{const li=document.createElement('li');li.textContent=p+': '+stats[p].pts+' pts';L.appendChild(li)});
+  const top=f=>players.reduce((a,b)=>f(b)>f(a)?b:a),add=t=>{const e=document.createElement('p');e.textContent=t;A.appendChild(e)};
+  add('Dare Devil: '+r[0]);const n=top(p=>stats[p].nail);if(stats[n].nail)add('Most Dramatic: '+n);const c=top(p=>stats[p].ref);if(stats[c].ref)add('Chicken of the Night: '+c);
+  $('#play').hidden=true;$('#end').hidden=false;boom();
+}
+function share(){const u=location.href,t='Come play Bottle Bakwaas with me! ';if(navigator.share)navigator.share({title:'Bottle Bakwaas',text:t,url:u}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent(t+u),'_blank')}
+function begin(){deck=[];stats={};players.forEach(p=>stats[p]={pts:0,nail:0,ref:0});$('#setup').hidden=true;$('#end').hidden=true;$('#play').hidden=false;nextTurn()}
+$('#add').onclick=addPlayer;
+$('#name').addEventListener('keydown',e=>{if(e.key==='Enter')addPlayer()});
+$('#start').onclick=begin;
+$('#quick').onclick=()=>{if(players.length<2){players=['Player 1','Player 2','Player 3','Player 4'];drawChips()}begin()};
+$('#back').onclick=()=>{$('#play').hidden=true;$('#setup').hidden=false};
+$('#spin').onclick=spin;
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=showCard);
+$('#card').onclick=flip;
+$('#card').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flip()});
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>rate(+b.dataset.s));
+$('#next').onclick=nextTurn;
+$('#snd').onclick=()=>{snd=!snd;$('#snd').textContent='Sound: '+(snd?'on':'off')};
+$('#fin').onclick=endGame;
+$('#again').onclick=()=>{$('#end').hidden=true;$('#setup').hidden=false};
+$('#share').onclick=$('#share2').onclick=share;
+document.querySelectorAll('#lv button').forEach(b=>b.onclick=()=>{level=+b.dataset.l;document.querySelectorAll('#lv button').forEach(x=>x.classList.toggle('on',x===b))});
+$('#addOwn').onclick=()=>{const v=$('#own').value.trim();if(v){own.push(v);$('#own').value='';$('#ownN').textContent=own.length+' custom dare'+(own.length>1?'s':'')+' added.'}};
+drawChips();
+</script>
+</body>
+</html>
