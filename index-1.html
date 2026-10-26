@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bottle Bakwaas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFE6F0;--ink:#3B0A45;--card:#fff;--muted:#7a4a86;--pink:#E91E78;--teal:#00A99D;--sun:#FFB000;--line:#f1b3cf;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2A0733;--ink:#FFE8F2;--card:#431052;--muted:#d6a4df;--line:#6b2a7e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#2A0733;--ink:#FFE8F2;--card:#431052;--muted:#d6a4df;--line:#6b2a7e;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:"Baloo 2",system-ui,sans-serif;font-weight:500;font-size:1.05rem;line-height:1.35}
+main{max-width:520px;margin:0 auto;padding:22px 18px 28px}
+h1{font-family:"Bowlby One",system-ui,sans-serif;font-weight:400;font-size:clamp(2.6rem,13vw,4.2rem);line-height:.98;margin:8px 0 10px;color:var(--pink);text-shadow:3px 3px 0 var(--sun)}
+.sub{color:var(--muted);margin:0 0 14px}
+.row{display:flex;gap:10px}
+input{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:16px;padding:10px 14px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:16px;padding:12px 16px;cursor:pointer;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s,box-shadow .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sun{background:var(--sun);color:#3B0A45}
+.btn.go{background:var(--pink);color:#fff;width:100%;font-size:1.3rem;padding:16px;margin-top:12px}
+.btn.truth{background:var(--teal);color:#05302c}.btn.dare{background:var(--pink)}
+.btn.soft{background:var(--card);color:var(--ink);border:3px solid var(--line)}
+.wide{width:100%;margin-top:10px}
+.btn:focus-visible,input:focus-visible,.link:focus-visible,.chip button:focus-visible,.fc:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+#chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:3px solid var(--c);border-radius:999px;padding:3px 6px 3px 4px;font-weight:800}
+.av{width:28px;height:28px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-style:normal;font-size:1rem}
+.chip button{border:0;background:none;color:var(--muted);font:inherit;font-size:1.2rem;line-height:1;cursor:pointer;padding:2px 6px}
+.lv{display:flex;gap:8px}.lv button{flex:1;font:inherit;font-weight:800;padding:10px;border-radius:14px;border:3px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.lv button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+details{margin:6px 0}summary{cursor:pointer;font-weight:800}
+.table{position:relative;width:100%;max-width:340px;aspect-ratio:1;margin:6px auto 8px;border-radius:50%;border:5px solid var(--ink);background:var(--card);box-shadow:0 6px 0 rgba(0,0,0,.2)}
+#hl{position:absolute;inset:0;border-radius:50%;transition:background .3s}
+.seat{position:absolute;transform:translate(-50%,-50%);max-width:36%;display:flex;align-items:center;gap:4px;padding:2px 9px 2px 2px;border-radius:999px;background:var(--card);color:var(--ink);border:3px solid var(--c);font-weight:800;font-size:.8rem;transition:transform .3s}
+.seat span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.seat .av{width:24px;height:24px;flex:none}
+.seat.win{transform:translate(-50%,-50%) scale(1.3);z-index:2;background:var(--sun);color:#3B0A45}
+.bottle{position:absolute;left:50%;top:26%;width:28px;height:48%;margin-left:-14px;background:linear-gradient(var(--pink),var(--pink)) center top/12px 10px no-repeat;border-radius:4px 4px 0 0;transition:transform 4s cubic-bezier(.12,.6,.1,1)}
+.bottle::before{content:"";position:absolute;left:8px;right:8px;top:10px;bottom:45%;background:#fff;border:3px solid #3B0A45;border-bottom:0}
+.bottle::after{content:"";position:absolute;left:0;right:0;bottom:0;height:57%;border-radius:12px 12px 10px 10px;background:linear-gradient(90deg,#fff 60%,#e4e4ee);border:3px solid #3B0A45}
+.ask{text-align:center;font-weight:800;font-size:1.25rem;margin:0 0 6px}
+.fc{perspective:1000px;cursor:pointer;margin:6px 0 10px}
+.fi{position:relative;min-height:300px;transform-style:preserve-3d;transition:transform .6s}
+.fc.open .fi{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;border:8px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;background:linear-gradient(var(--card),var(--card)) padding-box,repeating-linear-gradient(45deg,var(--pink) 0 10px,var(--sun) 10px 20px,var(--teal) 20px 30px) border-box}
+.front{background:linear-gradient(var(--pink),var(--pink)) padding-box,repeating-linear-gradient(45deg,var(--sun) 0 10px,var(--teal) 10px 20px,var(--card) 20px 30px) border-box;color:#fff}
+.front span{font-family:"Bowlby One",sans-serif;font-size:6rem;line-height:1}
+.back{transform:rotateY(180deg)}
+.back b{color:var(--pink);font-size:1.15rem}.back i{font-style:normal;font-size:3rem;line-height:1.2}
+.back p{font-size:1.35rem;line-height:1.25;font-weight:800;margin:4px 0 0}
+.shake{animation:sh .4s}@keyframes sh{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.dock{position:sticky;bottom:0;padding:10px 0 4px;background:linear-gradient(transparent,var(--bg) 25%)}
+.dock .btn.go{margin-top:0}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px}
+#score{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0 0}.sc{font-size:.85rem;font-weight:800;background:var(--card);border:3px solid var(--c);border-radius:999px;padding:1px 10px}
+.link{display:block;margin:14px auto 0;background:none;border:0;color:var(--muted);font:inherit;text-decoration:underline;cursor:pointer}
+#board{padding-left:1.3em;font-size:1.3rem;font-weight:800}#awards p{margin:8px 0;font-weight:800;background:var(--sun);color:#3B0A45;padding:10px 14px;border-radius:16px}
+#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9}
+.badge{text-align:center;font-family:"Bowlby One",sans-serif;font-size:1.1rem;color:var(--ink);background:var(--sun);border-radius:999px;padding:4px 14px;width:max-content;margin:0 auto 6px;color:#3B0A45}
+.lv button{font-size:.9rem;padding:8px 2px}
+select{font:inherit;font-weight:800;color:var(--ink);background:var(--card);border:3px solid var(--line);border-radius:16px;padding:8px 4px}
+</style>
+</head>
+<body>
+<main>
+<section id="setup">
+  <h1>Bottle Bakwaas</h1>
+  <p class="sub">Add everyone, put the phone in the middle, spin the bottle. No skipping! (Easier versions of exercise dares are fine.)</p>
+  <div class="row"><input id="name" placeholder="Player name" maxlength="20" autocomplete="off"><button class="btn sun" id="add">Add</button></div>
+  <div id="chips"></div>
+  <p class="sub" id="hint"></p>
+  <div class="lv" id="lv"><button data-l="0" class="on">Auto-climb</button><button data-l="1">Level 1</button><button data-l="2">Level 2</button><button data-l="3">Level 3</button></div>
+  <p class="sub" style="margin-top:6px">Auto-climb: Level 1 lasts 8 rounds, Level 2 lasts 20 rounds, then Level 3 till the end. No dare ever repeats. Your own dares come up early in their level.</p>
+  <div class="row"><select id="ownL" aria-label="Level"><option value="1">Level 1</option><option value="2">Level 2</option><option value="3">Level 3</option></select><input id="own" placeholder="Your own dare" maxlength="120" autocomplete="off"><button class="btn sun" id="addOwn">Add</button></div>
+  <p class="sub" id="ownN"></p>
+  <details><summary>How to play</summary><p class="sub">Spin the bottle. Whoever it points at flips a card and does the dare. The group scores it. Refuse and you get a forfeit!</p></details>
+  <button class="btn go" id="start" disabled>Start game</button>
+  <button class="btn soft wide" id="quick">Quick start with 4 players</button>
+  <button class="btn soft wide" id="share">Share on WhatsApp</button>
+</section>
+<section id="play" hidden>
+  <div class="badge" id="badge"></div>
+  <div class="table" id="table"><div id="hl"></div><div class="bottle" id="bottle"></div></div>
+  <p class="ask" id="res"></p>
+  <div class="fc" id="card" hidden tabindex="0"><div class="fi"><div class="face front"><span>?</span><b>Tap to flip</b></div><div class="face back"><b id="kind"></b><i id="ico"></i><p id="prompt"></p></div></div></div>
+  <div id="score"></div>
+  <div class="dock">
+    <div id="spinBox"><button class="btn go" id="spin">Spin the bottle</button></div>
+    <div id="choose" hidden><button class="btn go dare" data-m="d">Reveal my dare</button></div>
+    <button class="btn soft wide" id="tm" hidden></button>
+    <div class="three" id="rates" hidden><button class="btn truth" data-s="2">Nailed it +2</button><button class="btn soft" data-s="1">Okay +1</button><button class="btn dare" data-s="-1">Refused</button></div>
+    <button class="btn go" id="next" hidden>Next spin</button>
+  </div>
+  <button class="link" id="snd">Sound: on</button>
+  <button class="link" id="fin">End game and see awards</button>
+  <button class="link" id="back">Edit players</button>
+</section>
+<section id="end" hidden>
+  <h1>Final scores</h1><ol id="board"></ol><div id="awards"></div>
+  <button class="btn go" id="again">Play again</button>
+  <button class="btn soft wide" id="share2">Share on WhatsApp</button>
+</section>
+</main>
+<canvas id="cf"></canvas>
+<script>
+const DARES=[];
+const TWISTS=["do it in slow motion.", "do it in a robot voice.", "do it in an opera voice.", "do it while standing on one foot.", "do it like a news anchor.", "do it with a pillow on your head.", "everyone rates it from 1 to 10 afterwards."];
+const FORF=["Do 10 jumping jacks, counting loudly in a funny voice.","Tell your funniest joke. If nobody laughs, tell another.","Give everyone a compliment in an over-the-top voice.","Wear a funny hat (anything on your head) for the next 3 rounds.","Do your best chicken dance for 15 seconds.","Accept a silly nickname from the group for the rest of the game.","Sing any chorus like an opera singer.","Do 5 squats, announcing each one like a sports commentator.","Take a goofy selfie and post it on your story for 1 hour.", "Do 20 squats while the group counts slowly.", "Let the group draw a funny face on your cheek with kajal or lipstick (washable).", "Do the chicken dance while singing Happy Birthday."];
+const L2o=[50,51,52,53,65,66,17,32,41,56,57,60,22,28],L3o=[49,9,20,34,35,40,12];
+const A1=["Sing the chorus of your favorite song like a rockstar, with air guitar.", "Draw a lipstick heart on your cheek and keep it for 3 rounds.", "Draw a thick kajal unibrow and keep it for 3 rounds.", "Color your cheeks red with lipstick like a doll and keep them for 3 rounds.", "Paint your nose black with kajal like a cat and say “meow” after every sentence for 2 rounds.", "Wear your T-shirt or kurta inside out for the rest of the level.", "Wear a scarf or dupatta as a cape and enter the room like a superhero.", "Put socks on your hands and do a 20-second dance.", "Dance for 30 seconds to a song the group picks.", "Wear opposite-gender clothes from the family wardrobe (ask first!) and walk like a model.", "Sing Happy Birthday in the most dramatic opera voice.", "Draw a big kajal mustache and keep it for 3 rounds.", "Send a friend a voice note singing “Good morning” in a funny voice.", "Send a friend a selfie with your funniest face and the caption “Mood”.", "Post a 10-second story of your goofiest dance move.", "Wear sunglasses and a scarf and walk in like a film star.", "Do a slow-motion hero entry while the group hums a filmi tune.", "Sing the alphabet song in a funny voice.", "Wear a pot or bowl as a hat and make a royal announcement.", "Draw big round glasses around your eyes with kajal.", "Dance like a robot for 20 seconds.", "Sing a nursery rhyme like a heavy-metal singer.", "Draw a tattoo on your arm with lipstick or kajal (washable).", "Text a friend the emoji the group picks and show everyone their reply.", "Put on a funny wig-style hairdo with clips and rubber bands and keep it for 3 rounds.", "Do 10 push-ups.", "Do 20 jumping jacks.", "Do 15 squats.", "Hold a plank for 20 seconds.", "Do 20 high knees.", "Do 10 lunges.", "Do 15 sit-ups.", "Do 20 seconds of mountain climbers."],A2=["Post a story of yourself dancing in an outfit the group picks.", "Call your best friend, sing them a chorus, and ask for a rating out of 10.", "Call your best friend and tell them something embarrassing about yourself.", "Call your best friend and say “I have something shocking to tell you…” then confess something silly, like eating their snack years ago.", "Pick a random follower and post a story just like theirs, same pose and style.", "Post a story poll: “Am I cute or cringe?” and show the group the result.", "Post a lip-sync reel to a song the group picks.", "Wear opposite-gender clothes (ask first!) and post a dance story.", "Paint a heart, unibrow and red cheeks, then post a selfie story with “Beauty mode on”.", "Record a reel as a news reporter covering a “breaking emergency” like a missing remote.", "Send a friend a voice note singing a famous filmi song badly.", "Call a random follower and give them a 20-second motivational speech.", "Send your family group a voice note singing a good-morning song.", "Post a story holding a sign: “I lost a game, send help.”", "Dance for 30 seconds in a costume made from household items and post it.", "Change your WhatsApp status to a line the group picks for 1 hour.", "Send a friend a selfie in a funny costume with “Guess who I became?”", "Record a 15-second shopping-channel ad for a spoon and send it to a friend.", "Call a friend and ask for serious advice about a silly problem, like which sock goes on first.", "Post a story of a catwalk in your craziest outfit.", "Send a friend a voice note in your best filmi dialogue voice.", "Set a funny selfie as your profile picture for 1 hour.", "Put on clown makeup, video call a friend and say hi like nothing happened.", "Text a friend “You’re today’s MVP” with the silliest sticker you have.", "Dance with a broom as your partner for 30 seconds.", "Sing one line of a song in 5 voices: opera, robot, baby, villain and reporter.", "Let the group draw a silly design on your face with washable kajal and post a selfie.", "Ask followers on your story to send you a nickname. Use the best one for the rest of the game.", "Send a friend a voice note narrating your day like a wildlife documentary.", "Reenact a famous filmi scene with household props and post it.", "Do 20 push-ups.", "Hold a plank for 40 seconds and film it for your story.", "Do 30 squats.", "Do 40 jumping jacks.", "Do 5 burpees and film them for your story.", "Hold a wall sit for 45 seconds.", "Do 20 jumping jacks, then 10 push-ups, back to back.", "Post a story of 25 high knees with the caption “Gym day 1”.", "Do 30 sit-ups."],A3=["Post your ugliest selfie on your story for 24 hours.", "Dress fully in opposite-gender clothes with makeup (ask first!) and post a dance reel on your account.", "Do full clown makeup with lipstick and kajal and post a selfie story.", "Change your Instagram name to a silly name picked by the group for 24 hours.", "Post a reel of your most cringe dance to a song the group picks and leave it up for 24 hours.", "Video call your best friend in a wild costume and sing a full chorus.", "Post a reel acting out a dramatic filmi villain monologue.", "Let the group pick a costume from the wardrobe (ask first!), then dance in it and post a reel.", "Let the group paint your face freely with lipstick and kajal, post a selfie, and keep it for the rest of the level.", "Send your family group a voice note singing Happy Birthday to nobody.", "Call a friend and speak only in rhymes for 1 minute.", "Post a story as a TV news anchor announcing “Local legend loses game”.", "Post a reel lip-syncing a sad filmi song while fake-crying for drama.", "Wear your clothes backwards, socks on your hands and a pot on your head, then post a strut story.", "Challenge another player to a 30-second dance-off, record it, and post it if both agree.", "Call a friend and describe your new superpower in full seriousness for 30 seconds.", "Give a 1-minute motivational speech like a gym coach and post it on your story.", "Make a superhero costume from household items and post your origin-story reel.", "Film a slow-motion dramatic walk through the house in costume and post it with epic music.", "Post a selfie with 5 sticky notes on your face and a silly caption.", "Send your best friend a selfie of your messiest hair with the caption “New look unlocked”.", "Sing a song the group picks while dancing in a costume, and film it for your story.", "Post a story of a fake cooking show with cold ingredients and a dramatic chef meltdown.", "Be everyone’s servant for 2 rounds in a funny costume. Say “Yes, my king or queen.”", "Hold a dramatic funeral for the last snack in the house and film it for your story.", "Take a group selfie with everyone making their silliest face (only if all agree) and post it.", "Record a whispered nature documentary about the group sitting here and post it.", "Put on a costume and video call a friend, staying in character like a pirate for the whole call.", "Do 20 push-ups, then post a flex story with the caption “Gym day 1”.", "Film a 20-second Bollywood-style entry with slow motion, sunglasses and a dupatta blowing in a fan, and post it.", "Do 20 push-ups, 20 squats and 20 jumping jacks, resting between sets, and post it as a reel.", "Hold a plank for 60 seconds.", "Do 10 burpees and film them as a reel.", "Lead the group in a 1-minute workout and post it as a reel.", "Challenge another player to a 1-minute plank race. The loser does 15 squats.", "Challenge another player to a push-up contest: most in 30 seconds wins. The loser does 10 squats.", "Do 50 jumping jacks without stopping.", "Do 30 squats in a row without stopping.", "Hold a wall sit for 1 minute."];
+const D=DARES.map((t,i)=>({t,l:L3o.includes(i+1)?3:L2o.includes(i+1)?2:1})).concat(A1.map(t=>({t,l:1})),A2.map(t=>({t,l:2})),A3.map(t=>({t,l:3}))).filter(d=>!d.t.startsWith("Bang a steel pot")).filter((d,i,a)=>a.findIndex(x=>x.t===d.t)===i);
+const LN=['','Warm-up','Spicy','Total chaos'];
+const R1=8,R2=20;
+
+const $=s=>document.querySelector(s);
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const EM=["🦁","🐯","🦊","🐼","🐸","🦄","🐵","🐙","🦖","🐧","🦉","🐰"],COL=["#FF4D8D","#FFC93C","#2EC4B6","#8E6CFF","#FF8A3D","#4DA3FF","#6BCB77","#E056FD","#FF6B6B","#26C6DA","#C7E03D","#B08968"];
+let players=[],cur=null,rot=0,deck=[],tmr=null,snd=true,AC=null,stats={},level=1,mode=0,spins=0,tries=0,deckLvl=0,own=[],since=0,cust=0,used=new Set(),txt='',open=false;
+try{players=JSON.parse(localStorage.getItem('bb')||'[]').slice(0,30)}catch(e){}
+const av=(i,p)=>{const a=document.createElement('i');a.className='av';a.textContent=EM[i%12];return a};
+function beep(f,d){if(!snd)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.05;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+function chime(){beep(660,.15);setTimeout(()=>beep(880,.3),160)}
+function buzz(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+function boom(){const c=$('#cf'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;const P=[...Array(90)].map(()=>({x:c.width/2,y:c.height*.6,vx:(Math.random()-.5)*14,vy:-Math.random()*16-4,s:6+Math.random()*6,c:['#E91E78','#FFB000','#00A99D','#fff'][Math.random()*4|0],r:Math.random()*6}));let f=0;(function t(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.vy+=.5;p.x+=p.vx;p.y+=p.vy;p.r+=.2;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore()});if(++f<90)requestAnimationFrame(t);else x.clearRect(0,0,c.width,c.height)})()}
+function timer(t){clearInterval(tmr);const b=$('#tm'),m=t.match(/(\d+)[- ]second/);b.hidden=!m;if(!m)return;let n=+m[1];b.textContent='Start '+n+'s timer';b.onclick=()=>{b.onclick=null;b.textContent=n+'s left';tmr=setInterval(()=>{n--;b.textContent=n>0?n+'s left':'Time’s up!';if(n<=0){clearInterval(tmr);chime()}},1000)}}
+function icon(t){const R=[[/call|voice note/i,'📞'],[/push-up|arm-wrestle|flex|dumbbell/i,'💪'],[/story|profile/i,'📱'],[/pot|drum|tapping/i,'🥁'],[/mustache/i,'🥸'],[/lipstick/i,'💄'],[/kajal|eyeliner|unibrow|glasses/i,'👁️'],[/tooth/i,'🦷'],[/hat|crown/i,'👑'],[/clothes|T-shirt|scarf|dupatta|towel|socks/i,'👚'],[/sing|song|conduct|opera/i,'🎤'],[/dance|chicken|crab|strut|robot|walk|moonwalk/i,'💃'],[/fridge|cook|kitchen|spoon|ladle|oven|water/i,'🍳'],[/sticky/i,'📝'],[/ghost|bedsheet/i,'👻'],[/selfie|photo/i,'📸'],[/jacks|squat|sit-and|balance|pose|statue/i,'🤸']];for(const[r,e]of R)if(r.test(t))return e;return'🎉'}
+function score(){const b=$('#score');b.textContent='';players.forEach((p,i)=>{const c=document.createElement('span');c.className='sc';c.style.setProperty('--c',COL[i%12]);c.textContent=EM[i%12]+' '+p+' '+stats[p].pts;b.appendChild(c)})}
+function seats(){
+  const T=$('#table');T.querySelectorAll('.seat').forEach(e=>e.remove());
+  const n=players.length,seg=360/n,st=players.map((p,i)=>'#fff '+i*seg+'deg '+(i*seg+1.6)+'deg,'+COL[i%12]+' '+(i*seg+1.6)+'deg '+(i+1)*seg+'deg');T.style.background='conic-gradient(from '+(-seg/2)+'deg,'+st.join(',')+')';$('#hl').style.background='none';
+  players.forEach((p,i)=>{const a=i*2*Math.PI/players.length,s=document.createElement('div'),n=document.createElement('span');s.className='seat';s.style.setProperty('--c',COL[i%12]);n.textContent=p;s.appendChild(av(i));s.appendChild(n);s.style.left=50+40*Math.sin(a)+'%';s.style.top=50-40*Math.cos(a)+'%';T.appendChild(s)});
+}
+function drawChips(){
+  const box=$('#chips');box.textContent='';
+  players.forEach((p,i)=>{const c=document.createElement('span');c.className='chip';c.style.setProperty('--c',COL[i%12]);c.appendChild(av(i));c.appendChild(document.createTextNode(p));
+    const x=document.createElement('button');x.textContent='×';x.setAttribute('aria-label','Remove '+p);x.onclick=()=>{players.splice(i,1);drawChips()};c.appendChild(x);box.appendChild(c)});
+  $('#start').disabled=players.length<2;
+  $('#hint').textContent=players.length<2?'Add at least 2 players. There’s no upper limit.':players.length+' players ready.';
+  try{localStorage.setItem('bb',JSON.stringify(players))}catch(e){}
+}
+function addPlayer(){const v=$('#name').value.trim();if(v&&!players.some(p=>p.toLowerCase()===v.toLowerCase()))players.push(v);$('#name').value='';drawChips();$('#name').focus()}
+function show(s){$('#spinBox').hidden=s!=='spin';$('#choose').hidden=s!=='choose';$('#card').hidden=s!=='card';$('#table').hidden=s==='card';$('#res').hidden=s==='card';if(s!=='card'){$('#rates').hidden=$('#next').hidden=$('#tm').hidden=true}}
+function nextTurn(){
+  clearInterval(tmr);cur=null;open=false;tries=0;$('[data-s="-1"]').textContent='Refused';$('#card').classList.remove('open','shake');
+  const old=level;level=mode||(spins<R1?1:spins<R1+R2?2:3);const up=spins>0&&level>old;
+  $('#badge').textContent='Level '+level+' · '+LN[level];
+  $('#res').textContent=up?'LEVEL UP! Level '+level+': '+LN[level]:'Spin it and let the bottle decide.';
+  if(up){since=2;boom();chime();buzz(200)}
+  $('#spin').disabled=false;seats();score();show('spin');
+}
+function spin(){
+  $('#spin').disabled=true;$('#res').textContent='';spins++;
+  const n=players.length,r=Math.random()*n|0,seg=360/n,target=r*seg+(Math.random()-.5)*seg*.6;
+  rot+=360*(4+(Math.random()*3|0))+(((target-rot)%360)+360)%360;
+  $('#bottle').style.transform='rotate('+rot+'deg)';
+  for(let i=0;i<30;i++)setTimeout(()=>beep(300+i*12,.04),3900*(1-Math.pow(1-i/30,2)));
+  setTimeout(()=>{cur=players[r];document.querySelectorAll('.seat')[r].classList.add('win');$('#hl').style.background='conic-gradient(from '+(-seg/2)+'deg,transparent '+r*seg+'deg,rgba(255,255,255,.55) '+r*seg+'deg '+(r+1)*seg+'deg,transparent '+(r+1)*seg+'deg)';$('#res').textContent=cur+', it’s you!';show('choose');chime();buzz(80)},4100);
+}
+function pick(l){let p=D.filter(d=>d.l===l&&!used.has(d.t));if(!p.length)p=D.filter(d=>!used.has(d.t));if(!p.length)return null;const d=p[Math.random()*p.length|0];used.add(d.t);return d.t}
+function pickCustom(){const c=own.filter(o=>o.l===level&&!o.u);if(!c.length)return null;const o=c[Math.random()*c.length|0];o.u=1;return o}
+function showCard(){
+  let c=since>=2?pickCustom():null,t;
+  if(c){t=c.t;since=0;cust=c.l}else{t=pick(level);cust=0;since++}
+  if(t===null){endGame();return}
+  txt=t;if(!cust&&Math.random()<.25)txt+=' Twist: '+TWISTS[Math.random()*TWISTS.length|0];
+  $('#kind').textContent=(cust?'Custom dare, Level '+cust+' for ':'Dare for ')+cur;$('#ico').textContent=icon(txt);$('#prompt').textContent=txt;
+  open=false;$('#card').classList.remove('open','shake');show('card');
+}
+function flip(){if(open||!cur)return;open=true;$('#card').classList.add('open');beep(520,.1);$('#rates').hidden=false;timer(txt)}
+function forfeit(){$('#kind').textContent='Forfeit for '+cur;$('#ico').textContent='😅';$('#prompt').textContent=FORF[Math.random()*FORF.length|0];$('#rates').hidden=true;$('#next').hidden=false;$('#tm').hidden=true;clearInterval(tmr)}
+function swap(){const t=pick(level);if(t===null){forfeit();return}txt=t;$('#kind').textContent='Funnier dare for '+cur;$('#ico').textContent=icon(txt);$('#prompt').textContent=txt;$('[data-s="-1"]').textContent='Refuse = penalty';timer(txt)}
+function rate(v){const st=stats[cur];if(v<0){st.ref++;buzz([60,40,60]);$('#card').classList.add('shake');setTimeout(()=>$('#card').classList.remove('shake'),450);if(tries===0){tries=1;swap()}else{st.pts=Math.max(0,st.pts-1);forfeit()}return}st.pts+=v;if(v===2){st.nail++;boom();buzz(120)}setTimeout(nextTurn,v===2?1300:0)}
+function endGame(){
+  clearInterval(tmr);const r=players.slice().sort((a,b)=>stats[b].pts-stats[a].pts),L=$('#board'),A=$('#awards');L.textContent='';A.textContent='';
+  r.forEach(p=>{const li=document.createElement('li');li.textContent=p+': '+stats[p].pts+' pts';L.appendChild(li)});
+  const top=f=>players.reduce((a,b)=>f(b)>f(a)?b:a),add=t=>{const e=document.createElement('p');e.textContent=t;A.appendChild(e)};
+  add('Dare Devil: '+r[0]);const n=top(p=>stats[p].nail);if(stats[n].nail)add('Most Dramatic: '+n);const c=top(p=>stats[p].ref);if(stats[c].ref)add('Chicken of the Night: '+c);
+  $('#play').hidden=true;$('#end').hidden=false;boom();
+}
+function share(){const u=location.href,t='Come play Bottle Bakwaas with me! ';if(navigator.share)navigator.share({title:'Bottle Bakwaas',text:t,url:u}).catch(()=>{});else window.open('https://wa.me/?text='+encodeURIComponent(t+u),'_blank')}
+function begin(){spins=0;level=0;deck=[];used=new Set();since=0;own.forEach(o=>o.u=0);stats={};players.forEach(p=>stats[p]={pts:0,nail:0,ref:0});$('#setup').hidden=true;$('#end').hidden=true;$('#play').hidden=false;nextTurn()}
+$('#add').onclick=addPlayer;
+$('#name').addEventListener('keydown',e=>{if(e.key==='Enter')addPlayer()});
+$('#start').onclick=begin;
+$('#quick').onclick=()=>{if(players.length<2){players=['Player 1','Player 2','Player 3','Player 4'];drawChips()}begin()};
+$('#back').onclick=()=>{$('#play').hidden=true;$('#setup').hidden=false};
+$('#spin').onclick=spin;
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=showCard);
+$('#card').onclick=flip;
+$('#card').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')flip()});
+document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>rate(+b.dataset.s));
+$('#next').onclick=nextTurn;
+$('#snd').onclick=()=>{snd=!snd;$('#snd').textContent='Sound: '+(snd?'on':'off')};
+$('#fin').onclick=endGame;
+$('#again').onclick=()=>{$('#end').hidden=true;$('#setup').hidden=false};
+$('#share').onclick=$('#share2').onclick=share;
+document.querySelectorAll('#lv button').forEach(b=>b.onclick=()=>{mode=+b.dataset.l;document.querySelectorAll('#lv button').forEach(x=>x.classList.toggle('on',x===b))});
+$('#addOwn').onclick=()=>{const v=$('#own').value.trim();if(v){own.push({t:v,l:+$('#ownL').value,u:0});$('#own').value='';const c=[1,2,3].map(l=>own.filter(o=>o.l===l).length);$('#ownN').textContent='Your dares: Level 1 ('+c[0]+'), Level 2 ('+c[1]+'), Level 3 ('+c[2]+').'}};
+drawChips();
+</script>
+</body>
+</html>
